@@ -25,4 +25,21 @@ pipeline {
             }
         }
     }
+
+    post {
+        success {
+            emailext (
+                to: 'm.piszczek.368@studms.ug.edu.pl',
+                subject: "✅ Build SUCCESS: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Build zakończył się sukcesem. Sprawdź: ${env.BUILD_URL}"
+            )
+        }
+        failure {
+            emailext (
+                to: 'm.piszczek.368@studms.ug.edu.pl',
+                subject: "❌ Build FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+                body: "Build nie powiódł się. Szczegóły: ${env.BUILD_URL}"
+            )
+        }
+    }
 }
